@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UserRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -14,17 +16,27 @@ class UserController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request) : \Illuminate\Http\JsonResponse
+    public function index(Request $request) : JsonResponse
     {
         return response()->json($request->user());
     }
 
     /**
      * Store a newly created resource in storage.
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(UserRequest $request) : JsonResponse
     {
-        //
+        $user = new User();
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password  = Hash::make($request->input('password'));
+
+        $result = $user->save();
+
+        return response()->json($result);
     }
 
     /**
@@ -32,7 +44,7 @@ class UserController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function show(int $id)  : \Illuminate\Http\JsonResponse
+    public function show(int $id)  : JsonResponse
     {
         $user = User::where('id', $id)->first();
         return response()->json($user);
