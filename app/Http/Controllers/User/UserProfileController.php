@@ -23,6 +23,8 @@ class UserProfileController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param UserProfileRequest $request
+     * @return JsonResponse
      */
     public function store(UserProfileRequest $request) : JsonResponse
     {
@@ -43,10 +45,13 @@ class UserProfileController extends Controller
 
     /**
      * Display the specified resource.
+     * @param int $id
+     * @return JsonResponse
      */
-    public function show(string $id) : JsonResponse
+    public function show(int $id) : JsonResponse
     {
         $userProfile = UserProfile::where('id',$id)->with('user')->with('profileType')->first();
+
         return response()->json($userProfile);
     }
 
