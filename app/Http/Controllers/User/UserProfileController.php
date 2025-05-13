@@ -57,10 +57,25 @@ class UserProfileController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param UserProfileRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(UserProfileRequest $request, int $id) : JsonResponse
     {
-        //
+        $userProfile = UserProfile::find($id);
+
+        $userProfile->first_name = $request->input('first_name');
+        $userProfile->last_name = $request->input('last_name');
+        $userProfile->description = $request->input('description');
+        $userProfile->experience = $request->input('experience');
+        $userProfile->user_id = $request->input('user_id');
+        $userProfile->profile_types_id = $request->input('profile_types_id');
+        $userProfile->cities_id = $request->input('cities_id');
+
+        $result = $userProfile->save();
+
+        return response()->json($result);
     }
 
     /**
