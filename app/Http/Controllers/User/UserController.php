@@ -52,10 +52,19 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param UserRequest $request
+     * @param int $id
+     * @return JsonResponse
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, int $id) : JsonResponse
     {
-        //
+        $user = User::where('id', $id)->first();
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+
+        $result = $user->save();
+        return response()->json($result);
     }
 
     /**
