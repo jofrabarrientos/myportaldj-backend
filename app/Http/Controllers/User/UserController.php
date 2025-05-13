@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, int $id) : JsonResponse
     {
-        $user = User::where('id', $id)->first();
+        $user = User::find($id);
 
         $user->name = $request->input('name');
         $user->email = $request->input('email');

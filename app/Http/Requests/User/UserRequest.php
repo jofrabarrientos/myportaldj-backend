@@ -21,9 +21,14 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $request = request();
+
+        $isCreating = $request->isMethod('POST');
+        $uniqueRule = $isCreating ? '|unique:users' : '';
+
         return [
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email'.$uniqueRule,
             'password' => 'sometimes',
         ];
     }
