@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserProfileRequest;
 use App\Models\UserProfile;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UserProfileController extends Controller
 {
